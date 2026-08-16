@@ -1,0 +1,246 @@
+/* cset-ui shared design tokens + component styling.
+   Import this AFTER `@import 'tailwindcss';` in your app's own app.css:
+     @import 'tailwindcss';
+     @import 'cset-ui/styles.css';
+   `@source` below makes Tailwind scan this package's own component files for
+   utility classes, so you don't need to add that path yourself. */
+
+@font-face {
+  font-family: 'Geist';
+  src: url('./fonts/geist-variable.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('./fonts/geist-mono-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Pixel';
+  src: url('./fonts/geist-pixel-square.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  /* Fence: 'v', '.', and digits 0-9 only. Geist Pixel has no Vietnamese
+     glyphs, so the browser is told never to use it for any other character. */
+  unicode-range: U+76, U+2E, U+30-39;
+}
+
+:root {
+  --brand-primary: #030b44;
+  --brand-secondary: #2e2a5e;
+  --brand-dark: #0f072d;
+  --brand-pcb: #0651a2;
+  --brand-red: #700b0b;
+  --brand-white: #ffffff;
+}
+
+:root,
+[data-theme='light'] {
+  color-scheme: light;
+  --ui-bg: #f5f5f8;
+  --ui-surface: #ffffff;
+  --ui-surface-muted: #f0f0f4;
+  --ui-border: #d9dae3;
+  --ui-border-strong: #8185a2;
+  --ui-ink: var(--brand-primary);
+  --ui-ink-muted: #4a4f78;
+  --ui-accent: var(--brand-pcb);
+  --ui-accent-solid: var(--brand-pcb);
+  --ui-on-accent-solid: var(--brand-white);
+  --ui-danger: var(--brand-red);
+  --ui-danger-solid: var(--brand-red);
+  --ui-on-danger-solid: var(--brand-white);
+  --ui-success: var(--ui-accent);
+  --ui-focus: var(--brand-pcb);
+  --ui-logo: #000000;
+  --ui-grid-dot: color-mix(in srgb, var(--ui-border-strong) 40%, transparent);
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+  --ui-bg: var(--brand-dark);
+  --ui-surface: var(--brand-primary);
+  --ui-surface-muted: var(--brand-secondary);
+  --ui-border: var(--brand-secondary);
+  --ui-border-strong: #6d6a8e;
+  --ui-ink: #ffffff;
+  --ui-ink-muted: #8c8aa6;
+  --ui-accent: #6a97c7;
+  --ui-accent-solid: var(--brand-pcb);
+  --ui-on-accent-solid: var(--brand-white);
+  --ui-danger: #b07979;
+  --ui-danger-solid: var(--brand-red);
+  --ui-on-danger-solid: var(--brand-white);
+  --ui-success: var(--ui-accent);
+  --ui-focus: #6a97c7;
+  --ui-logo: #ffffff;
+  --ui-grid-dot: color-mix(in srgb, var(--ui-border-strong) 55%, transparent);
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme]) {
+    color-scheme: dark;
+    --ui-bg: var(--brand-dark);
+    --ui-surface: var(--brand-primary);
+    --ui-surface-muted: var(--brand-secondary);
+    --ui-border: var(--brand-secondary);
+    --ui-border-strong: #6d6a8e;
+    --ui-ink: #ffffff;
+    --ui-ink-muted: #8c8aa6;
+    --ui-accent: #6a97c7;
+    --ui-accent-solid: var(--brand-pcb);
+    --ui-on-accent-solid: var(--brand-white);
+    --ui-danger: #b07979;
+    --ui-danger-solid: var(--brand-red);
+    --ui-on-danger-solid: var(--brand-white);
+    --ui-success: var(--ui-accent);
+    --ui-focus: #6a97c7;
+    --ui-logo: #ffffff;
+    --ui-grid-dot: color-mix(in srgb, var(--ui-border-strong) 55%, transparent);
+  }
+}
+
+@theme inline {
+  --color-bg: var(--ui-bg);
+  --color-surface: var(--ui-surface);
+  --color-surface-muted: var(--ui-surface-muted);
+  --color-border: var(--ui-border);
+  --color-border-strong: var(--ui-border-strong);
+  --color-ink: var(--ui-ink);
+  --color-ink-muted: var(--ui-ink-muted);
+  --color-accent: var(--ui-accent);
+  --color-accent-solid: var(--ui-accent-solid);
+  --color-on-accent-solid: var(--ui-on-accent-solid);
+  --color-danger: var(--ui-danger);
+  --color-danger-solid: var(--ui-danger-solid);
+  --color-on-danger-solid: var(--ui-on-danger-solid);
+  --color-success: var(--ui-success);
+  --font-sans: 'Geist', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, monospace;
+}
+
+@source './dist';
+
+@layer base {
+  body {
+    margin: 0;
+    min-width: 320px;
+    background-color: var(--ui-bg);
+    background-image: radial-gradient(circle, var(--ui-grid-dot) 1px, transparent 1px);
+    background-size: 24px 24px;
+    color: var(--ui-ink);
+    font-family: var(--font-sans);
+  }
+  a {
+    color: inherit;
+  }
+  input,
+  select,
+  textarea,
+  button {
+    font-family: inherit;
+    font-size: inherit;
+  }
+  input,
+  select,
+  textarea {
+    background: var(--ui-surface);
+    color: var(--ui-ink);
+    border: 1px solid var(--ui-border-strong);
+    border-radius: 2px;
+    padding: 0.7rem 0.8rem;
+  }
+  ::placeholder {
+    color: var(--ui-ink-muted);
+  }
+  :focus-visible {
+    outline: 3px solid var(--ui-focus);
+    outline-offset: 2px;
+  }
+}
+
+.field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.mono-label {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Small L-shaped brackets at two corners, like PCB test-point markers. */
+.corner-ticks {
+  position: relative;
+}
+.corner-ticks::before,
+.corner-ticks::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  pointer-events: none;
+}
+.corner-ticks::before {
+  top: -1px;
+  left: -1px;
+  border-top: 2px solid var(--ui-accent-solid);
+  border-left: 2px solid var(--ui-accent-solid);
+}
+.corner-ticks::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 2px solid var(--ui-accent-solid);
+  border-right: 2px solid var(--ui-accent-solid);
+}
+
+/* Thin rule with a diamond "via" marker, in place of a plain <hr>. */
+.circuit-divider {
+  position: relative;
+  height: 1px;
+  background: var(--ui-border);
+  margin-block: 1.5rem;
+}
+.circuit-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  background: var(--ui-surface);
+  border: 1.5px solid var(--ui-border-strong);
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.forgot-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: color 150ms ease;
+}
+.forgot-link:hover,
+.forgot-link:focus-visible {
+  color: var(--ui-accent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  * {
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-duration: 180ms;
+    transition-timing-function: ease;
+  }
+}
+
+.version-badge {
+  font-family: 'Geist Pixel', var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  color: var(--ui-ink-muted);
+}
