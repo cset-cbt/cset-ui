@@ -25,6 +25,7 @@ declare const Select: $$__sveltets_2_IsomorphicComponent<{
     disabled?: boolean;
     required?: boolean;
     size?: "sm" | "md";
+    onValueChange?: ((val: string) => void) | undefined;
     class?: string;
 }, {
     [evt: string]: CustomEvent<any>;

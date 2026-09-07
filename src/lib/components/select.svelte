@@ -15,6 +15,7 @@
   export let disabled: boolean = false;
   export let required: boolean = false;
   export let size: 'sm' | 'md' = 'sm';
+  export let onValueChange: ((val: string) => void) | undefined = undefined;
 
   let className = '';
   export { className as class };
@@ -22,6 +23,7 @@
   function handleValueChange(val: string | undefined) {
     if (val !== undefined) {
       value = val;
+      onValueChange?.(val);
     }
   }
 
