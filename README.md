@@ -1,13 +1,13 @@
 # cset-ui
 
-Shared UI components for CSET club web apps — Svelte 5 + Tailwind CSS v4 + [bits-ui](https://bits-ui.com), styled in the club's Blueprint/Schematic design system (self-hosted Geist fonts, navy/PCB-blue palette, dot-grid background, corner-tick and circuit-trace accents, accessible light/dark theme switch).
+Shared UI components for CSET club web apps - Svelte 5 + Tailwind CSS v4 + [bits-ui](https://bits-ui.com), styled in the club's Blueprint/Schematic design system (self-hosted Geist fonts, navy/PCB-blue palette, dot-grid background, corner-tick and circuit-trace accents, accessible light/dark theme switch).
 
-Not published to npm — install directly from GitHub.
+Not published to npm; install directly from GitHub.
 
 ## Install
 
 ```bash
-pnpm add github:cset-cbt/cset-ui#v0.1.0
+pnpm add github:cset-cbt/cset-ui#v0.2.0
 ```
 
 Pin to a tag (shown above) or a commit SHA for reproducible installs. Requires `svelte@^5` and `@sveltejs/kit@^2` in the consuming app (peer dependencies) and Tailwind CSS v4 with `@tailwindcss/vite`.
@@ -29,23 +29,29 @@ Then set `data-theme="light"` or `"dark"` on `<html>` (see `applyTheme`/`readThe
 
 ```svelte
 <script lang="ts">
-  import { Card, Button, InputField, PageHeader, ThemeToggle } from 'cset-ui';
+  import { Card, Button, InputField, PageHeader, ThemeToggle, Select, type SelectOption } from 'cset-ui';
+
+  let role = 'user';
+  const roles: SelectOption[] = [
+    { value: 'admin', label: 'Quản trị viên' },
+    { value: 'user', label: 'Thành viên' }
+  ];
 </script>
 
 <Card>
-  <PageHeader eyebrow="My App" title="Hello">Some description.</PageHeader>
+  <PageHeader eyebrow="CSET" title="Xin chào">Mô tả giao diện.</PageHeader>
   <InputField label="Email" name="email" type="email" required />
-  <Button type="submit">Submit</Button>
+  <Select items={roles} bind:value={role} size="md" />
+  <Button type="submit">Xác nhận</Button>
 </Card>
 ```
 
-Exports: `Logo`, `Button`, `Card`, `PageHeader`, `InputField`, `FormMessage`, `ThemeToggle`, `VersionBadge`, `CircuitDivider`, `KeyboardIllustration`, plus `readTheme`/`applyTheme`/`Theme` from the theme utility.
-
-`VersionBadge` reads `$app/environment`'s `version`, which reflects whichever consuming app renders it — set `kit.version.name` in that app's own `svelte.config.js` from its own `package.json` version.
+Exports: `Logo`, `Button`, `Card`, `PageHeader`, `InputField`, `FormMessage`, `ThemeToggle`, `VersionBadge`, `CircuitDivider`, `KeyboardIllustration`, `Select` (and type `SelectOption`), plus `readTheme`/`applyTheme`/`toggleThemeWithTransition`/`Theme` from the theme utility.
+`VersionBadge` reads `$app/environment`'s `version`, which reflects whichever consuming app renders it. Set `kit.version.name` in that app's own `svelte.config.js` from its own `package.json` version.
 
 ## Design tokens
 
-All components read CSS custom properties (`--ui-*`, `--brand-*`) defined in `styles.css`'s light/dark `[data-theme]` blocks. To reskin an app slightly without forking a component, override the relevant `--ui-*` variable in that app's own CSS after the `cset-ui/styles.css` import — don't edit files inside `node_modules`.
+All components read CSS custom properties (`--ui-*`, `--brand-*`) defined in `styles.css`'s light/dark `[data-theme]` blocks. To reskin an app slightly without forking a component, override the relevant `--ui-*` variable in that app's own CSS after the `cset-ui/styles.css` import. Do not edit files inside `node_modules`.
 
 ## Releasing a new version
 
@@ -59,7 +65,7 @@ git tag vX.Y.Z
 git push && git push --tags
 ```
 
-Consuming apps pin an exact tag/SHA (see Install above) and bump it deliberately — there's no auto-update. A component change here can affect every app using it; review before bumping a consumer's pinned ref.
+Consuming apps pin an exact tag/SHA (see Install above) and bump it deliberately. There is no auto-update. A component change here can affect every app using it; review before bumping a consumer's pinned ref.
 
 ## Local development
 
@@ -69,4 +75,4 @@ pnpm run check     # svelte-check
 pnpm run package   # build dist/ + copy styles.css
 ```
 
-There's no dev server / preview app in this repo (component-only package). To preview changes, consume it via a `file:` link from a throwaway app, or link it into one of the real CSET apps on a branch.
+Documentation & live component showcase website: `cset-ui-docs` (SvelteKit + Cloudflare Workers). Preview components, interactive props, and copy code snippets directly.
