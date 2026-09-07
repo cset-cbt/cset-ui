@@ -8,4 +8,5 @@ export { default as ThemeToggle } from './components/theme-toggle.svelte';
 export { default as VersionBadge } from './components/version-badge.svelte';
 export { default as CircuitDivider } from './components/circuit-divider.svelte';
 export { default as KeyboardIllustration } from './components/keyboard-illustration.svelte';
+export { default as Select } from './components/select.svelte';
 export { readTheme, applyTheme } from './theme';
