@@ -1,6 +1,6 @@
 {
   "name": "cset-ui",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "CSET shared UI components (Svelte 5 + Tailwind v4 + bits-ui), Blueprint/Schematic design system",
   "type": "module",
   "license": "UNLICENSED",
