@@ -368,6 +368,7 @@ html[data-theme='dark'] .glass-card {
 .select-trigger--md {
   padding: 0.55rem 0.85rem;
   font-size: 0.85rem;
+}
 .select-trigger--field {
   padding: 0.7rem 0.85rem;
   font-size: 0.8rem;
