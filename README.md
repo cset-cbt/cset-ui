@@ -1,78 +1,177 @@
 # cset-ui
 
-Shared UI components for CSET club web apps - Svelte 5 + Tailwind CSS v4 + [bits-ui](https://bits-ui.com), styled in the club's Blueprint/Schematic design system (self-hosted Geist fonts, navy/PCB-blue palette, dot-grid background, corner-tick and circuit-trace accents, accessible light/dark theme switch).
+> Engineering-grade Blueprint / Schematic UI library for the CSET ecosystem, built natively on Svelte 5, Tailwind CSS v4, and Bits UI.
 
-Not published to npm; install directly from GitHub.
+`cset-ui` provides a unified, accessible, and high-performance component foundation for CSET web platforms (`mycset`, `cset-auth`, `cset-ui-docs`). It encodes the club's signature **Blueprint Schematic** design identity: self-hosted Geist typography, technical corner-ticks, monospaced eyebrow tags, hairline borders, and an accessible dual-theme system.
 
-## Install
+---
+
+## Installation
+
+Install directly from the GitHub repository pinned to the current stable release:
 
 ```bash
-pnpm add github:cset-cbt/cset-ui#v0.3.1
+pnpm add github:cset-cbt/cset-ui#v0.4.0
 ```
 
-Pin to a tag (shown above) or a commit SHA for reproducible installs. Requires `svelte@^5` and `@sveltejs/kit@^2` in the consuming app (peer dependencies) and Tailwind CSS v4 with `@tailwindcss/vite`.
+### Peer Dependencies
+- `svelte`: `^5.0.0`
+- `@sveltejs/kit`: `^2.0.0`
+- `tailwindcss`: `^4.0.0` (with `@tailwindcss/vite`)
 
-## Set up in a SvelteKit + Tailwind v4 app
+---
 
-In your app's `src/app.css`:
+## Configuration
+
+### 1. Stylesheet Integration
+In your application's global stylesheet (`src/app.css`):
 
 ```css
-@import 'tailwindcss';
-@import 'cset-ui/styles.css';
+@import "tailwindcss";
+@import "cset-ui/styles.css";
 ```
 
-That's it — no extra Tailwind `@source` config needed in your app. `cset-ui/styles.css` declares its own `@source` pointing at this package's component files, and Tailwind v4 follows `@source`/`@theme` through `@import` chains, so your build automatically picks up every utility class used inside `cset-ui`'s components. Fonts are plain relative `url()`s in the same file, so Vite's asset pipeline bundles them into your build automatically too — no manual font-copying step.
+`cset-ui/styles.css` declares its own `@source` directive pointing directly at the compiled component files. Tailwind CSS v4 automatically resolves classes across the `@import` boundary without manual `@source` declarations in your app. Self-hosted Geist fonts are bundled automatically via Vite asset resolution.
 
-Then set `data-theme="light"` or `"dark"` on `<html>` (see `applyTheme`/`readTheme` below) and add an anti-flash inline script in `app.html` that sets it before first paint, same pattern as any of the CSET apps' `src/app.html`.
+### 2. Anti-Flash Theme Setup
+Add this script inside the `<head>` of `src/app.html` to eliminate Flash of Unstyled Content (FOUC):
 
-## Usage
+```html
+<script>
+  try {
+    var t = localStorage.getItem('cset-theme');
+    document.documentElement.dataset.theme =
+      t === 'light' || t === 'dark'
+        ? t
+        : matchMedia('(prefers-color-scheme: dark)').matches
+          ? 'dark'
+          : 'light';
+  } catch (e) {}
+</script>
+```
+
+---
+
+## Component Catalog
+
+Import primitives directly from the package root:
 
 ```svelte
 <script lang="ts">
-  import { Card, Button, InputField, PageHeader, ThemeToggle, Select, type SelectOption } from 'cset-ui';
+  import {
+    Button,
+    Card,
+    InputField,
+    Select,
+    Switch,
+    DatePicker,
+    Dialog,
+    Sheet,
+    toast,
+    Badge,
+    Avatar,
+    Tabs,
+    Pagination,
+    Table,
+    Accordion,
+    Breadcrumb,
+    Skeleton,
+    PageHeader,
+    ThemeToggle,
+    CircuitDivider
+  } from 'cset-ui';
+</script>
+```
 
-  let role = 'user';
-  const roles: SelectOption[] = [
-    { value: 'admin', label: 'Quản trị viên' },
-    { value: 'user', label: 'Thành viên' }
-  ];
+### 1. Overlays & Feedback
+- **`Button`**: Tactile interactive button with `primary`, `secondary`, `danger` variants, automatic `<a>` link mode, and loading state.
+- **`Toast` (Sonner)**: Stacked toast notifications via `toast.success()`, `toast.error()`, `toast.warning()`, `toast.info()`.
+- **`Dialog` (Modal)**: Accessible modal dialog with backdrop blur, focus trapping, and header/footer snippets.
+- **`Sheet` (Drawer)**: Slide-out panel supporting `left`, `right`, `top`, `bottom` orientations.
+
+### 2. Forms & Controls
+- **`InputField`**: Monospace label, error text slot, and technical corner accents.
+- **`Select`**: Custom dropdown with keyboard accessibility and category color swatches.
+- **`DatePicker`**: Calendar popover selector with ISO 8601 string value binding.
+- **`Switch`**: Boolean toggle switch with smooth physical slide.
+
+### 3. Data Display & Navigation
+- **`Card`**: Signature Blueprint container with technical corner-ticks.
+- **`Badge`**: Status and category tags with semantic variant colors.
+- **`Avatar` & `AvatarGroup`**: User portraits with automatic monogram initials fallback.
+- **`Tabs`**: Tabbed view switcher with sliding active indicator.
+- **`Pagination`**: Directional and numeric page navigation.
+- **`Table`**: Striped data table with hoverable rows and hairline dividers.
+- **`Accordion`**: Collapsible FAQ and disclosure panels.
+- **`Breadcrumb`**: Hierarchical route trail with chevron separators.
+- **`Skeleton`**: Shimmering placeholder box preventing layout shifts.
+- **`PageHeader`**: Consistent section header with eyebrow badge.
+
+### 4. Utilities
+- **`ThemeToggle`**: Light/Dark theme switcher with smooth luminescence transition.
+- **`CircuitDivider`**: Schematic circuit-trace decorative divider.
+- **`KeyboardIllustration`**: Blueprint keyboard visual component.
+
+---
+
+## Example Usage
+
+```svelte
+<script lang="ts">
+  import { Card, PageHeader, InputField, Select, Button, toast } from 'cset-ui';
+
+  let email = $state('');
+  let role = $state('developer');
+
+  function handleSave() {
+    toast.success('Settings synchronized');
+  }
 </script>
 
-<Card>
-  <PageHeader eyebrow="CSET" title="Xin chào">Mô tả giao diện.</PageHeader>
-  <InputField label="Email" name="email" type="email" required />
-  <Select items={roles} bind:value={role} size="md" />
-  <Button type="submit">Xác nhận</Button>
+<Card class="p-6">
+  <PageHeader
+    eyebrow="SETTINGS"
+    title="Member Access"
+    description="Configure identity federation and workspace roles."
+  />
+
+  <form onsubmit={handleSave} class="space-y-4 mt-6">
+    <InputField
+      label="EMAIL ADDRESS"
+      name="email"
+      type="email"
+      bind:value={email}
+      required
+    />
+
+    <Select
+      label="SYSTEM ROLE"
+      items={[
+        { value: 'admin', label: 'Administrator' },
+        { value: 'developer', label: 'Developer' }
+      ]}
+      bind:value={role}
+    />
+
+    <Button type="submit" size="sm">Save Configuration</Button>
+  </form>
 </Card>
 ```
 
-Exports: `Logo`, `Button`, `Card`, `PageHeader`, `InputField`, `FormMessage`, `ThemeToggle`, `VersionBadge`, `CircuitDivider`, `KeyboardIllustration`, `Select`, `Toast`, `Toaster`, `toast`, `Dialog`, `Popover`, `Tooltip`, `Badge`, `Avatar`, `AvatarGroup`, `Tabs`, `Accordion`, `Breadcrumb`, `Switch`, `Checkbox`, `RadioGroup`, `Slider`, `Skeleton`, `DropdownMenu`, `CommandPalette`, plus `readTheme`/`applyTheme`/`toggleThemeWithTransition`/`Theme` from the theme utility.
-`VersionBadge` reads `$app/environment`'s `version`, which reflects whichever consuming app renders it. Set `kit.version.name` in that app's own `svelte.config.js` from its own `package.json` version.
+---
 
-## Design tokens
-
-All components read CSS custom properties (`--ui-*`, `--brand-*`) defined in `styles.css`'s light/dark `[data-theme]` blocks. To reskin an app slightly without forking a component, override the relevant `--ui-*` variable in that app's own CSS after the `cset-ui/styles.css` import. Do not edit files inside `node_modules`.
-
-## Releasing a new version
-
-This repo ships its **built** output in git (`dist/`, `styles.css` at the repo root) rather than relying on a build-on-install step, since pnpm ignores lifecycle scripts (`prepare`/`postinstall`) from git dependencies by default unless explicitly allowlisted. So after editing `src/lib/`:
-
-```bash
-pnpm run package   # rebuilds dist/ and styles.css
-git add -A
-git commit -m "..."
-git tag vX.Y.Z
-git push && git push --tags
-```
-
-Consuming apps pin an exact tag/SHA (see Install above) and bump it deliberately. There is no auto-update. A component change here can affect every app using it; review before bumping a consumer's pinned ref.
-
-## Local development
+## Development
 
 ```bash
 pnpm install
-pnpm run check     # svelte-check
-pnpm run package   # build dist/ + copy styles.css
+pnpm package  # build dist and copy styles
+pnpm check    # run svelte-check diagnostics
 ```
 
-Documentation & live component showcase website: `cset-ui-docs` (SvelteKit + Cloudflare Workers). Preview components, interactive props, and copy code snippets directly.
+---
+
+## Documentation & LLM Endpoints
+
+- **Live Documentation**: [cset-ui-docs](https://cset-ui-docs.cset-software.workers.dev)
+- **Lightweight Index**: [`/llms.txt`](https://cset-ui-docs.cset-software.workers.dev/llms.txt)
+- **Complete API Reference**: [`/llms-full.txt`](https://cset-ui-docs.cset-software.workers.dev/llms-full.txt)
