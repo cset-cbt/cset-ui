@@ -1,4 +1,3 @@
-import { Dialog } from 'bits-ui';
 interface $$__sveltets_2_IsomorphicComponent<Props extends Record<string, any> = any, Events extends Record<string, any> = any, Slots extends Record<string, any> = any, Exports = {}, Bindings = string> {
     new (options: import('svelte').ComponentConstructorOptions<Props>): import('svelte').SvelteComponent<Props, Events, Slots> & {
         $$bindings?: Bindings;
@@ -17,24 +16,18 @@ type $$__sveltets_2_PropsWithChildren<Props, Slots> = Props & (Slots extends {
 } ? Props extends Record<string, never> ? any : {
     children?: any;
 } : {});
-declare const Dialog: $$__sveltets_2_IsomorphicComponent<$$__sveltets_2_PropsWithChildren<{
-    open?: boolean;
-    onOpenChange?: ((open: boolean) => void) | undefined;
-    title?: string;
-    description?: string;
-    size?: "sm" | "md" | "lg" | "xl" | "full";
+declare const AvatarGroup: $$__sveltets_2_IsomorphicComponent<$$__sveltets_2_PropsWithChildren<{
+    max?: number;
+    overflowCount?: number;
+    class?: string;
 }, {
-    trigger: {};
-    header: {};
     default: {};
-    footer: {};
 }>, {
     [evt: string]: CustomEvent<any>;
 }, {
-    trigger: {};
-    header: {};
     default: {};
-    footer: {};
-}, {}, string>;
-type Dialog = InstanceType<typeof Dialog>;
-export default Dialog;
+}, {
+    max: number;
+}, string>;
+type AvatarGroup = InstanceType<typeof AvatarGroup>;
+export default AvatarGroup;

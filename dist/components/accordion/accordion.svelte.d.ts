@@ -1,4 +1,10 @@
-import { Popover } from 'bits-ui';
+export interface AccordionItem {
+    value: string;
+    title: string;
+    content?: string;
+    disabled?: boolean;
+}
+import { Accordion } from 'bits-ui';
 interface $$__sveltets_2_IsomorphicComponent<Props extends Record<string, any> = any, Events extends Record<string, any> = any, Slots extends Record<string, any> = any, Exports = {}, Bindings = string> {
     new (options: import('svelte').ComponentConstructorOptions<Props>): import('svelte').SvelteComponent<Props, Events, Slots> & {
         $$bindings?: Bindings;
@@ -12,26 +18,16 @@ interface $$__sveltets_2_IsomorphicComponent<Props extends Record<string, any> =
     };
     z_$$bindings?: Bindings;
 }
-type $$__sveltets_2_PropsWithChildren<Props, Slots> = Props & (Slots extends {
-    default: any;
-} ? Props extends Record<string, never> ? any : {
-    children?: any;
-} : {});
-declare const Popover: $$__sveltets_2_IsomorphicComponent<$$__sveltets_2_PropsWithChildren<{
-    open?: boolean;
-    onOpenChange?: ((open: boolean) => void) | undefined;
-    side?: "top" | "right" | "bottom" | "left";
-    align?: "start" | "center" | "end";
-    sideOffset?: number;
+declare const Accordion: $$__sveltets_2_IsomorphicComponent<{
+    items?: AccordionItem[];
+    value?: string;
     class?: string;
 }, {
-    trigger: {};
-    default: {};
-}>, {
     [evt: string]: CustomEvent<any>;
 }, {
-    trigger: {};
-    default: {};
+    content: {
+        item: AccordionItem;
+    };
 }, {}, string>;
-type Popover = InstanceType<typeof Popover>;
-export default Popover;
+type Accordion = InstanceType<typeof Accordion>;
+export default Accordion;

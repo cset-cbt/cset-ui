@@ -28,23 +28,18 @@
 
 <Dialog.Root bind:open {onOpenChange}>
   {#if $$slots.trigger}
-    <Dialog.Trigger asChild let:builder>
-      <slot name="trigger" {builder} />
+    <Dialog.Trigger class="outline-none">
+      <slot name="trigger" />
     </Dialog.Trigger>
   {/if}
 
   <Dialog.Portal>
-    <Dialog.Overlay
-      class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
-      transition={fade}
-      transitionConfig={{ duration: 180 }}
-    />
-    <Dialog.Content
-      class="fixed left-1/2 top-1/2 z-50 w-full {sizeClasses} -translate-x-1/2 -translate-y-1/2 p-4 outline-none"
-      transition={scale}
-      transitionConfig={{ start: 0.94, duration: 200, opacity: 0, easing: cubicOut }}
-    >
-      <div class="relative w-full rounded-2xl border border-border bg-surface p-6 shadow-2xl backdrop-blur-xl">
+    <Dialog.Overlay class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm" />
+    <Dialog.Content class="fixed left-1/2 top-1/2 z-50 w-full {sizeClasses} -translate-x-1/2 -translate-y-1/2 p-4 outline-none">
+      <div
+        class="relative w-full rounded-2xl border border-border bg-surface p-6 shadow-2xl backdrop-blur-xl"
+        transition:scale={{ start: 0.94, duration: 200, opacity: 0, easing: cubicOut }}
+      >
         <!-- Header -->
         {#if title || $$slots.header}
           <div class="flex items-start justify-between border-b border-border pb-3 mb-4">

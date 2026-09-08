@@ -7,7 +7,7 @@ Not published to npm; install directly from GitHub.
 ## Install
 
 ```bash
-pnpm add github:cset-cbt/cset-ui#v0.2.0
+pnpm add github:cset-cbt/cset-ui#v0.3.1
 ```
 
 Pin to a tag (shown above) or a commit SHA for reproducible installs. Requires `svelte@^5` and `@sveltejs/kit@^2` in the consuming app (peer dependencies) and Tailwind CSS v4 with `@tailwindcss/vite`.
@@ -46,7 +46,7 @@ Then set `data-theme="light"` or `"dark"` on `<html>` (see `applyTheme`/`readThe
 </Card>
 ```
 
-Exports: `Logo`, `Button`, `Card`, `PageHeader`, `InputField`, `FormMessage`, `ThemeToggle`, `VersionBadge`, `CircuitDivider`, `KeyboardIllustration`, `Select` (and type `SelectOption`), plus `readTheme`/`applyTheme`/`toggleThemeWithTransition`/`Theme` from the theme utility.
+Exports: `Logo`, `Button`, `Card`, `PageHeader`, `InputField`, `FormMessage`, `ThemeToggle`, `VersionBadge`, `CircuitDivider`, `KeyboardIllustration`, `Select`, `Toast`, `Toaster`, `toast`, `Dialog`, `Popover`, `Tooltip`, `Badge`, `Avatar`, `AvatarGroup`, `Tabs`, `Accordion`, `Breadcrumb`, `Switch`, `Checkbox`, `RadioGroup`, `Slider`, `Skeleton`, `DropdownMenu`, `CommandPalette`, plus `readTheme`/`applyTheme`/`toggleThemeWithTransition`/`Theme` from the theme utility.
 `VersionBadge` reads `$app/environment`'s `version`, which reflects whichever consuming app renders it. Set `kit.version.name` in that app's own `svelte.config.js` from its own `package.json` version.
 
 ## Design tokens

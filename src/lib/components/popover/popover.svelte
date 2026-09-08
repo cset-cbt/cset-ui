@@ -14,8 +14,8 @@
 </script>
 
 <Popover.Root bind:open {onOpenChange}>
-  <Popover.Trigger asChild let:builder>
-    <slot name="trigger" {builder} />
+  <Popover.Trigger class="outline-none">
+    <slot name="trigger" />
   </Popover.Trigger>
 
   <Popover.Portal>
@@ -24,8 +24,6 @@
       {align}
       {sideOffset}
       class="z-50 rounded-xl border border-border bg-surface/98 p-3 shadow-2xl backdrop-blur-xl outline-none ring-1 ring-border/20 {className}"
-      transition={scale}
-      transitionConfig={{ start: 0.95, duration: 160, opacity: 0, easing: cubicOut }}
     >
       <slot />
     </Popover.Content>
