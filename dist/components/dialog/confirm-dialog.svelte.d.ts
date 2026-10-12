@@ -23,7 +23,7 @@ declare const ConfirmDialog: $$__sveltets_2_IsomorphicComponent<$$__sveltets_2_P
     confirmText?: string;
     cancelText?: string;
     variant?: "danger" | "primary";
-    size?: "sm" | "md";
+    size?: "sm" | "md" | "lg";
     onConfirm?: (() => void) | undefined;
     onCancel?: (() => void) | undefined;
 }, {

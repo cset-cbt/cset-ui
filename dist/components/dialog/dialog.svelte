@@ -34,23 +34,25 @@
   {/if}
 
   <Dialog.Portal>
-    <Dialog.Overlay class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm" />
+    <div transition:fade={{ duration: 180 }}>
+      <Dialog.Overlay class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm" />
+    </div>
     <Dialog.Content class="fixed left-1/2 top-1/2 z-50 w-full {sizeClasses} -translate-x-1/2 -translate-y-1/2 p-4 outline-none">
       <div
-        class="relative w-full rounded-2xl border border-border bg-surface p-6 shadow-2xl backdrop-blur-xl"
-        transition:scale={{ start: 0.94, duration: 200, opacity: 0, easing: cubicOut }}
+        class="relative w-full rounded-2xl border border-border bg-surface p-6 sm:p-7 shadow-2xl backdrop-blur-xl"
+        transition:scale={{ start: 0.92, duration: 220, opacity: 0, easing: cubicOut }}
       >
         <!-- Header -->
         {#if title || $$slots.header}
-          <div class="flex items-start justify-between border-b border-border pb-3 mb-4">
+          <div class="flex items-start justify-between border-b border-border pb-4 mb-4">
             <div>
               {#if title}
-                <Dialog.Title class="text-lg font-bold tracking-tight text-ink">
+                <Dialog.Title class="text-xl font-bold tracking-tight text-ink font-sans">
                   {title}
                 </Dialog.Title>
               {/if}
               {#if description}
-                <Dialog.Description class="mt-1 font-sans text-xs text-ink-muted leading-relaxed">
+                <Dialog.Description class="mt-1.5 font-sans text-sm text-ink-muted leading-relaxed">
                   {description}
                 </Dialog.Description>
               {/if}

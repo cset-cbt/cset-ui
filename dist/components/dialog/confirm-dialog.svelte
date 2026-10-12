@@ -8,7 +8,7 @@
   export let confirmText: string = 'Xác nhận';
   export let cancelText: string = 'Hủy bỏ';
   export let variant: 'danger' | 'primary' = 'danger';
-  export let size: 'sm' | 'md' = 'sm';
+  export let size: 'sm' | 'md' | 'lg' = 'md';
   export let onConfirm: (() => void) | undefined = undefined;
   export let onCancel: (() => void) | undefined = undefined;
 
@@ -29,10 +29,12 @@
   {description}
   {size}
 >
-  <div class="space-y-4">
-    <slot />
+  <div class="space-y-5 font-sans">
+    <div class="text-sm sm:text-base text-ink leading-relaxed">
+      <slot />
+    </div>
 
-    <div class="flex items-center justify-end gap-2.5 pt-3 border-t border-border">
+    <div class="flex items-center justify-end gap-3 pt-4 border-t border-border">
       <Button
         type="button"
         variant="secondary"
