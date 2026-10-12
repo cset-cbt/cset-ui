@@ -54,35 +54,42 @@
     align-items: center;
     width: 2.75rem;
     height: 1.5rem;
-    border-radius: 2px;
+    border-radius: 999px;
     border: 1px solid var(--ui-border-strong);
     background: var(--ui-surface-muted);
     cursor: pointer;
-    padding: 0;
+    padding: 2px;
+    transition: transform 120ms ease, background-color 150ms ease, border-color 150ms ease;
+  }
+  :global(.theme-switch:active) {
+    transform: scale(0.95);
   }
   :global(.theme-switch__icon) {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     color: var(--ui-ink-muted);
+    transition: opacity 150ms ease, color 150ms ease;
+    pointer-events: none;
   }
   :global(.theme-switch__icon--sun) {
-    left: 0.3rem;
+    left: 0.35rem;
   }
   :global(.theme-switch__icon--moon) {
-    right: 0.3rem;
+    right: 0.35rem;
   }
   :global(.theme-switch__thumb) {
     position: absolute;
-    top: 1px;
-    left: 1px;
-    width: 1.15rem;
-    height: 1.15rem;
-    border-radius: 1px;
+    top: 2px;
+    left: 2px;
+    width: calc(1.5rem - 6px);
+    height: calc(1.5rem - 6px);
+    border-radius: 999px;
     background: var(--ui-accent-solid);
-    transition: transform 150ms ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
   }
   :global(.theme-switch[data-state='checked'] .theme-switch__thumb) {
-    transform: translateX(1.2rem);
+    transform: translateX(1.25rem);
   }
 </style>
